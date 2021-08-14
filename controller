@@ -1,0 +1,34 @@
+//read all city controller
+exports.readAll = (req, res) => {
+
+    connection.then(() => {         return sql.query `SELECT * FROM city;`})
+        .then(result => res.json({
+            status: 2000,
+            message: "Cities read successfully",
+            data: result.recordset
+        }))
+        .catch(e => {
+            //  console.log(e);
+            res.json({
+                status: 5000,
+                message: "Cities can not be read"
+            });
+        })
+}
+////read tehsils
+exports.readTehsils = (req, res) => {
+    // promise
+    connection.then(() => { return sql.query `SELECT ts.TehsilId,ts.TehsilName,ts.DistrictId,d.DistrictName FROM Districts d,Tehsils ts WHERE  ts.DistrictId=${req.params.id} AND d.DistrictId=${req.params.id}`;})
+        .then(result => res.json({
+            status: 2000,
+            message: "Tehsils read successfully",
+            data: result.recordset
+        }))
+        .catch(e => {
+            //  console.log(e);
+            res.json({
+                status: 5000,
+                message: "Tehsils can not be read"
+            });
+        })
+}
